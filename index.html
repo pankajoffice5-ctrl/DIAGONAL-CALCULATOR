@@ -94,7 +94,7 @@
     }
 
     .angle {
-      width: 48%;
+      width: 31%;
       background-color: #f7f7f7;
       border-radius: 10px;
       padding: 10px;
@@ -116,16 +116,19 @@
 
   <div class="container">
     <h1>LME Diagonal Calculator</h1>
-    <img src="diagram-placeholder.png" alt="Triangle Diagram">
+    <img src="diagram-placeholder.jpg" alt="Triangle Diagram">
 
-    <label for="height1">Height (mm)</label>
+    <label for="height2">Height-1 (mm)</label>
+    <input type="number" id="height2" placeholder="Enter height" value="1710">
+
+    <label for="height1">Height-2 (mm)</label>
     <input type="number" id="height1" placeholder="Enter height" value="1210">
 
     <label for="length">Length (mm)</label>
     <input type="number" id="length" placeholder="Enter length" value="1200">
 
-        <label for="thk">Base Plate thk (mm) </label>
-    <input type="number" id="thk" placeholder="Enter length" value="10">
+    <label for="thk">Base Plate thk (mm)</label>
+    <input type="number" id="thk" placeholder="Enter thickness" value="10">
 
     <button onclick="calculate()">Calculate</button>
 
@@ -134,6 +137,7 @@
     <div class="angles">
       <div class="angle" id="angleA">Angle A: —</div>
       <div class="angle" id="angleB">Angle B: —</div>
+      <div class="angle" id="cheight">C: —  </div>
     </div>
 
     <footer>All angles in degrees (°)</footer>
@@ -142,11 +146,11 @@
   <script>
     function calculate() {
       const height1 = parseFloat(document.getElementById("height1").value);
+      const height2 = parseFloat(document.getElementById("height2").value);
       const length = parseFloat(document.getElementById("length").value);
       const thk = parseFloat(document.getElementById("thk").value);
-      const height = ( height1 - thk )
-
-
+      const height = height1 - thk;
+      const cheight = height2 - height1;
 
       if (isNaN(height) || isNaN(length) || height <= 0 || length <= 0) {
         alert("Please enter valid height and length values.");
@@ -157,12 +161,10 @@
       const angleA = Math.atan(height / length) * (180 / Math.PI);
       const angleB = 90 - angleA;
 
-      document.getElementById("diagonal").textContent =
-        "Diagonal: " + diagonal.toFixed(2);
-      document.getElementById("angleA").textContent =
-        "Angle A: " + angleA.toFixed(2) + "°";
-      document.getElementById("angleB").textContent =
-        "Angle B: " + angleB.toFixed(2) + "°";
+      document.getElementById("diagonal").textContent = "Diagonal: " + diagonal.toFixed(2);
+      document.getElementById("angleA").textContent = "Angle A: " + angleA.toFixed(2) + "°";
+      document.getElementById("angleB").textContent = "Angle B: " + angleB.toFixed(2) + "°";
+      document.getElementById("cheight").textContent = "C: " + cheight.toFixed(2);
     }
   </script>
 
