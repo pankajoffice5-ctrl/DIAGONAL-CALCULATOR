@@ -5,123 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LME Diagonal Calculator</title>
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    }
-
+    * { box-sizing: border-box; font-family: "Segoe UI", Roboto, Arial, sans-serif; }
     body {
       background: linear-gradient(135deg, #e3f2fd, #f1f8e9);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      margin: 0; padding: 0;
+      display: flex; justify-content: center; align-items: flex-start;
       min-height: 100vh;
     }
-
     .container {
-      background: #fff;
-      width: 95%;
-      max-width: 420px;
-      margin-top: 25px;
-      padding: 25px;
+      background: #fff; width: 95%; max-width: 420px;
+      margin-top: 25px; padding: 25px;
       border-radius: 16px;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
-
-    .top-image {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
-    }
-
-    h1 {
-      text-align: center;
-      color: #1565c0;
-      font-size: 22px;
-      margin: 10px 0 20px 0;
-      letter-spacing: 0.5px;
-    }
-
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: #333;
-      font-size: 14px;
-    }
-
+    .top-image { width: 100%; border-radius: 12px; margin-bottom: 15px; border: 1px solid #ddd; }
+    h1 { text-align: center; color: #1565c0; font-size: 22px; margin: 10px 0 20px 0; letter-spacing: 0.5px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; color: #333; font-size: 14px; }
     input {
-      width: 100%;
-      padding: 10px 12px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
-      transition: all 0.2s ease;
+      width: 100%; padding: 10px 12px; margin-bottom: 15px;
+      border: 1px solid #ccc; border-radius: 10px; font-size: 16px; transition: all 0.2s ease;
     }
-
-    input:focus {
-      border-color: #1e88e5;
-      outline: none;
-      box-shadow: 0 0 4px rgba(30, 136, 229, 0.4);
-    }
-
-    .angles {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .angle-group {
-      text-align: center;
-    }
-
-    .angle-group label {
-      font-size: 13px;
-      font-weight: 500;
-      color: #555;
-    }
-
-    .angle-group input {
-      text-align: center;
-    }
-
+    input:focus { border-color: #1e88e5; outline: none; box-shadow: 0 0 4px rgba(30,136,229,0.4); }
+    .angles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .angle-group { text-align: center; }
+    .angle-group label { font-size: 13px; font-weight: 500; color: #555; }
+    .angle-group input { text-align: center; }
     .result-box {
-      background-color: #f7f7f7;
-      border-radius: 10px;
-      padding: 14px;
-      margin-top: 15px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      color: #333;
-      border: 1px solid #ddd;
+      background-color: #f7f7f7; border-radius: 10px;
+      padding: 14px; margin-top: 15px; text-align: center;
+      font-size: 18px; font-weight: bold; color: #333; border: 1px solid #ddd;
     }
-
-    footer {
-      text-align: center;
-      font-size: 12px;
-      color: #777;
-      margin-top: 15px;
-    }
-
+    footer { text-align: center; font-size: 12px; color: #777; margin-top: 15px; }
     @media (max-width: 480px) {
-      .container {
-        padding: 20px;
-      }
-      h1 {
-        font-size: 20px;
-      }
-      input {
-        font-size: 15px;
-      }
-      .result-box {
-        font-size: 17px;
-      }
+      .container { padding: 20px; }
+      h1 { font-size: 20px; } input { font-size: 15px; }
+      .result-box { font-size: 17px; }
     }
   </style>
 </head>
@@ -130,8 +48,6 @@
   <div class="container">
     <h1>LME Diagonal Calculator</h1>
     <img src="angle-diagram.jpg" alt="Angle Diagram" class="top-image">
-
-    
 
     <label for="height2">Height-1 (mm)</label>
     <input type="number" id="height2" value="1710">
@@ -160,6 +76,9 @@
       </div>
     </div>
 
+    <label for="diagInput">Diagonal (mm)</label>
+    <input type="number" id="diagInput" placeholder="Enter diagonal value">
+
     <div class="result-box" id="diagonal">Diagonal: —</div>
 
     <footer>All angles are in degrees (°)</footer>
@@ -173,6 +92,7 @@
     const angleA = document.getElementById("angleA");
     const angleB = document.getElementById("angleB");
     const cheight = document.getElementById("cheight");
+    const diagInput = document.getElementById("diagInput");
     const diagonalBox = document.getElementById("diagonal");
 
     let updating = false;
@@ -195,11 +115,13 @@
         const b = 90 - a;
 
         diagonalBox.textContent = "Diagonal: " + diag.toFixed(2) + " mm";
+        diagInput.value = diag.toFixed(2);
         angleA.value = a.toFixed(2);
         angleB.value = b.toFixed(2);
         cheight.value = C.toFixed(2);
       } else {
         diagonalBox.textContent = "Diagonal: —";
+        diagInput.value = "";
         angleA.value = "";
         angleB.value = "";
         cheight.value = "";
@@ -228,6 +150,7 @@
 
         angleB.value = B.toFixed(2);
         cheight.value = C.toFixed(2);
+        diagInput.value = diag.toFixed(2);
         diagonalBox.textContent = "Diagonal: " + diag.toFixed(2) + " mm";
       }
 
@@ -254,7 +177,34 @@
 
         angleA.value = A.toFixed(2);
         cheight.value = C.toFixed(2);
+        diagInput.value = diag.toFixed(2);
         diagonalBox.textContent = "Diagonal: " + diag.toFixed(2) + " mm";
+      }
+
+      updating = false;
+    }
+
+    function updateFromDiagonal() {
+      if (updating) return;
+      updating = true;
+
+      const D = parseFloat(diagInput.value);
+      const L = parseFloat(length.value) || 0;
+      const H2v = parseFloat(h2.value) || 0;
+      const T = parseFloat(thk.value) || 0;
+
+      if (D > 0 && L > 0 && D > L) {
+        const height = Math.sqrt(D ** 2 - L ** 2);
+        const A = Math.atan(height / L) * (180 / Math.PI);
+        const B = 90 - A;
+        const H1v = height + T;
+        const C = H2v - H1v;
+
+        h1.value = H1v.toFixed(2);
+        angleA.value = A.toFixed(2);
+        angleB.value = B.toFixed(2);
+        cheight.value = C.toFixed(2);
+        diagonalBox.textContent = "Diagonal: " + D.toFixed(2) + " mm";
       }
 
       updating = false;
@@ -263,6 +213,7 @@
     [h1, h2, length, thk].forEach(el => el.addEventListener("input", updateFromHeights));
     angleA.addEventListener("input", updateFromAngleA);
     angleB.addEventListener("input", updateFromAngleB);
+    diagInput.addEventListener("input", updateFromDiagonal);
 
     updateFromHeights();
   </script>
